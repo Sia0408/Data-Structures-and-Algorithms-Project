@@ -533,7 +533,7 @@ int main()
 										}
 			} while (choice1 != 1 && choice1 != 2 && choice1 != 3 && choice1 != 4 && choice1 != 5 && choice1 != 6);
 			
-	} while(choice1 == 5 && choice != 6);
+	} while(choice1 == 5 && choice1 != 6);
 	delete C;
 	return 0;
 }
