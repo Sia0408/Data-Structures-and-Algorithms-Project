@@ -14,7 +14,7 @@ void setColor(int textColor)
 class Register
 {
 	protected:
-				char newusername[90], newpassword[100], username[100], password[100], ch, newregister;
+				char newusername[100], newpassword[100], username[100], password[100], ch, newregister;
 					
 };
 
