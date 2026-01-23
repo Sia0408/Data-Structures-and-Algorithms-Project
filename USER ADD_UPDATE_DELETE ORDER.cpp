@@ -1,9 +1,3 @@
-// ===============================
-// USER ORDER FOOD MODULE (Linked List + product.txt)
-// Records: OrderItem (id, name, price, category, qty)
-// Functions: Add / Update / Delete / Display
-// ===============================
-
 #include <iostream>
 #include <fstream>
 #include <iomanip>
@@ -13,9 +7,6 @@
 
 using namespace std;
 
-// -------------------------------
-// MENU RECORD (from product.txt)
-// -------------------------------
 struct MenuItem
 {
     char id[20];
@@ -24,20 +15,13 @@ struct MenuItem
     char category[10];
 };
 
-// -------------------------------
-// ORDER LINKED LIST NODE
-// -------------------------------
 struct OrderNode
 {
-    MenuItem item;     // id, name, price, category
-    int qty;           // user quantity
+    MenuItem item;     
+    int qty;           
     OrderNode* next;
 };
 
-// -------------------------------
-// Load menu from product.txt into array (NO vector)
-// product.txt format example:  M1 Handburger 3 M
-// -------------------------------
 int loadMenu(MenuItem menu[], int maxSize, const char* filename = "product.txt")
 {
     ifstream fin(filename);
@@ -82,9 +66,7 @@ int findMenuIndexById(const MenuItem menu[], int count, const char* targetId)
     return -1;
 }
 
-// -------------------------------
-// Linked-list helpers
-// -------------------------------
+
 void initOrderList(OrderNode*& head, OrderNode*& tail)
 {
     head = NULL;
@@ -114,15 +96,13 @@ OrderNode* findOrderNode(OrderNode* head, const char* targetId)
 
 void addOrderItem(OrderNode*& head, OrderNode*& tail, const MenuItem& mi, int qty)
 {
-    // if already exists, just add quantity
     OrderNode* existing = findOrderNode(head, mi.id);
     if(existing != NULL)
     {
         existing->qty += qty;
         return;
     }
-
-    // otherwise add new node at end (lecture-style insert end)
+    
     OrderNode* node = createOrderNode(mi, qty);
     if(head == NULL)
     {
@@ -154,12 +134,12 @@ bool deleteOrderItem(OrderNode*& head, OrderNode*& tail, const char* id)
     {
         if(strcmp(cur->item.id, id) == 0)
         {
-            if(prev == NULL) // delete head
+            if(prev == NULL) 
                 head = cur->next;
             else
                 prev->next = cur->next;
 
-            if(cur == tail) // if deleting tail
+            if(cur == tail) 
                 tail = prev;
 
             delete cur;
@@ -226,8 +206,6 @@ void freeOrderList(OrderNode*& head)
     }
 }
 
-// Optional: save order lines to ONE shared file for record consistency (admin can read too)
-// Format: username id name price category qty
 bool appendOrderToFile(const char* username, OrderNode* head, const char* filename="orders.txt")
 {
     ofstream fout(filename, ios::app);
@@ -247,10 +225,6 @@ bool appendOrderToFile(const char* username, OrderNode* head, const char* filena
     return true;
 }
 
-// -------------------------------
-// USER MENU (Add / Update / Delete / Display)
-// Call: userOrderFoodMenu(currentUsername);
-// -------------------------------
 void userOrderFoodMenu(char* currentUsername)
 {
     try
@@ -382,7 +356,6 @@ void userOrderFoodMenu(char* currentUsername)
                     cout << "Press any key...";
                     _getch();
 
-                    // clear current order after checkout
                     freeOrderList(head);
                     initOrderList(head, tail);
                 }
@@ -398,3 +371,4 @@ void userOrderFoodMenu(char* currentUsername)
         _getch();
     }
 }
+
