@@ -1385,20 +1385,6 @@ int countBookings()
     return count;
 }
 
-int countMenuItems() 
-{
-    ifstream file("product.txt");
-    int count = 0;
-    MenuItem temp;
-    
-    while (file >> temp.itemID >> temp.itemName >> temp.price >> temp.category) 
-	{
-        count++;
-    }
-    file.close();
-    return count;
-}
-
 void loadBookingsToArray(BookingData*& bookings, int& size) 
 {
     size = countBookings();
@@ -4507,4 +4493,5 @@ int main()
     
     return 0;
 }
+
 
