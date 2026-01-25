@@ -1387,7 +1387,7 @@ int countBookings()
 
 int countMenuItems() 
 {
-    ifstream file("menu.txt");
+    ifstream file("product.txt");
     int count = 0;
     MenuItem temp;
     
@@ -4507,3 +4507,4 @@ int main()
     
     return 0;
 }
+
