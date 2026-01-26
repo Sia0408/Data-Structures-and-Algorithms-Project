@@ -920,6 +920,7 @@ class WaitingQueue
 		        int tableNumber;
 		        char date[11];
 		        int timeSlot;
+		        char phone[15];
 		        QueueNode* next;
 		    };
     QueueNode* front;
@@ -944,13 +945,14 @@ class WaitingQueue
 		        }
 		    }
 
-		    void enqueue(const char* user, int table, const char* dt, int slot) 
+		    void enqueue(const char* user, int table, const char* dt, int slot, const char* ph) 
 			{
 		        QueueNode* newNode = new QueueNode;
 		        strcpy(newNode->username, user);
 		        newNode->tableNumber = table;
 		        strcpy(newNode->date, dt);
 		        newNode->timeSlot = slot;
+		        strcpy(newNode->phone, ph);
 		        newNode->next = NULL;
 		
 		        if (rear == NULL) 
@@ -965,7 +967,7 @@ class WaitingQueue
 		        size++;
 		    }
 
-		    bool dequeue(char* user, int& table, char* dt, int& slot) 
+		    bool dequeue(char* user, int& table, char* dt, int& slot, char* ph) 
 			{
 		        if (front == NULL) 
 				{
@@ -977,6 +979,7 @@ class WaitingQueue
 		        table = front->tableNumber;
 		        strcpy(dt, front->date);
 		        slot = front->timeSlot;
+		        strcpy(ph, front->phone);
 		
 		        front = front->next;
 		        if (front == NULL) 
@@ -2043,7 +2046,7 @@ void Customer::addBooking()
         cin>>confirm;
         if (confirm == 'y' || confirm == 'Y') 
 		{
-            waitingQueue.enqueue(username, table, dt, slot);
+            waitingQueue.enqueue(username, table, dt, slot, ph);
             cout<<"Added to waiting list. Position: "<<waitingQueue.getSize()<<"\n";
         }
     }
@@ -2184,8 +2187,8 @@ void Customer::deleteBooking()
             
             char waitUser[50];
             int waitTable, waitSlot;
-            char waitDate[11];
-            if (waitingQueue.dequeue(waitUser, waitTable, waitDate, waitSlot)) 
+            char waitDate[11], waitPhone[15];
+            if (waitingQueue.dequeue(waitUser, waitTable, waitDate, waitSlot,waitPhone)) 
 			{
                 cout<<"\nNotifying "<<waitUser<<" from waiting list...\n";
             }
@@ -4297,6 +4300,7 @@ void Admin::deleteBooking()
     cin>>id;
     
     BookingData* bookings;
+    BookingRecord booking;
     int size;
     loadBookingsToArray(bookings, size);
     
@@ -4315,6 +4319,18 @@ void Admin::deleteBooking()
 	{
         saveBookingsFromArray(bookings, size);
         cout<<"\nBooking deleted successfully!\n";
+        
+        char user[50], dt[11], phone[15];
+        int table, slot;
+        
+        if (waitingQueue.dequeue(user, table, dt, slot, phone)) 
+		{
+            booking.setData(nextBookingID, user, table, dt, slot, phone);
+    		booking.save();
+            bookingHash.insert(user, nextBookingID);
+            nextBookingID++;
+            cout<<"New Customer add booking successfully"<<endl;
+        }
     } 
 		else 
 		{
@@ -4417,14 +4433,14 @@ void Admin::manageWaitingList()
     
     if (choice == 1) 
 	{
-        char user[50], dt[11];
+        char user[50], dt[11], phone[15];
         int table, slot;
         
-        if (waitingQueue.dequeue(user, table, dt, slot)) 
+        if (waitingQueue.dequeue(user, table, dt, slot, phone)) 
 		{
             cout<<"\nProcessing booking for: "<<user<<"\n";
-            cout<<"Table: "<<table<<", Date: "<<dt<<", Slot: "<<slot<< "\n";
-            cout<<"Notified customer to confirm booking.\n";
+			cout<<"Table: "<<table<<", Date: "<<dt<<", Slot: "<<slot<<", Phone Number: "<<phone<<"\n";            
+			cout<<"Notified customer to confirm booking.\n";
         } 
 			else 
 			{
@@ -4493,6 +4509,3 @@ int main()
     
     return 0;
 }
-
-
-
