@@ -4483,6 +4483,11 @@ int main()
             case 2: 
 			{
 	                loginSystem.registeruser();
+					Customer customer;
+	                if (customerLogin(customer, loginSystem)) 
+					{
+	                    customer.displayMenu();
+	                }
 	                break;
             }
             case 3: 
@@ -4509,4 +4514,5 @@ int main()
     
     return 0;
 }
+
 
