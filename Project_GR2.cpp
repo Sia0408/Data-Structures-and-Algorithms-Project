@@ -1013,7 +1013,7 @@ class WaitingQueue
 		        cout<<"\n=== WAITING QUEUE ===\n";
 		        while (temp != NULL) 
 				{
-		            cout<<pos++<<". "<<temp->username<<" | Table: "<<temp->tableNumber<<" | Date: "<<temp->date<<" | Slot: "<<temp->timeSlot<<"\n";
+		            cout<<pos++<<". "<<temp->username<<" | Table: "<<temp->tableNumber<<" | Date: "<<temp->date<<" | Slot: "<<temp->timeSlot<<" | Phone Number: "<<temp->phone<<"\n";
 		            temp = temp->next;
 		        }
 		    }
@@ -4509,3 +4509,4 @@ int main()
     
     return 0;
 }
+
