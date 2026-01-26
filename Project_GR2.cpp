@@ -2663,8 +2663,8 @@ void Admin::manageMenu()
 		cout<<"1. Add Menu Item\n";
 		cout<<"2. Delete Menu Item\n";
 		cout<<"3. Edit Menu Items\n";
-		cout<<"4. View All Items or Sort All Items\n";
-		cout<<"5. Search Items\n";
+		cout<<"4. View All Menu Items or Sort All Menu Items\n";
+		cout<<"5. Search Menu Items\n";
 		cout<<"6. Exit\n";
 		choice;
 		cin>>choice;
@@ -4493,5 +4493,6 @@ int main()
     
     return 0;
 }
+
 
 
